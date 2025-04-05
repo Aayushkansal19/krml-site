@@ -10,13 +10,23 @@ db.serialize(() => {
     image TEXT
   )`);
 
-  db.run(`CREATE TABLE IF NOT EXISTS contacts (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT,
-    email TEXT,
-    message TEXT,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-  )`);
+  // db.run(`CREATE TABLE IF NOT EXISTS contacts (
+  //   id INTEGER PRIMARY KEY AUTOINCREMENT,
+  //   name TEXT,
+  //   email TEXT,
+  //   message TEXT,
+  //   created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  // )`);
+  db.run(`
+    CREATE TABLE IF NOT EXISTS contacts (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT,
+      email TEXT,
+      message TEXT,
+      timestamp TEXT
+    )
+  `);
+  
 
   console.log('Database & tables created successfully.');
 });

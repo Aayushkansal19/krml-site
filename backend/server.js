@@ -101,51 +101,50 @@ app.delete('/api/admin/products/:id', (req, res) => {
 
 // API to POST contact form submissions
 
-// app.post('/api/contact', (req, res) => {
-//   const { name, email, message } = req.body;
-//   db.run(`INSERT INTO contacts (name, email, message) VALUES (?, ?, ?)`, [name, email, message],
-//     (err) => {
-//       if (err) return res.status(500).json({error: err.message});
-//       res.json({status: "Message received!"});
-//     });
-// });
 
 
 // app.post('/api/contact', (req, res) => {
 //   const { name, email, message } = req.body;
+
+//   if (!name || !email || !message) {
+//     return res.status(400).json({ status: "All fields required." });
+//   }
+
+//   const db = new sqlite3.Database(path.join(__dirname, 'data', 'krml.db'));
 
 //   const stmt = db.prepare("INSERT INTO contacts (name, email, message) VALUES (?, ?, ?)");
 //   stmt.run(name, email, message, function (err) {
 //     if (err) {
-//       console.error("DB Error:", err);
+//       console.error("DB Insert Error:", err.message); // 👈 Important
 //       return res.status(500).json({ status: "Error saving message." });
 //     }
-//     res.json({ status: "Message sent!" });
+//     console.log("✅ Contact saved:", name, email); // 👈 Useful for Render Logs
+//     res.json({ status: "Message received!" });
 //   });
-// });
 
+//   stmt.finalize();
+//   db.close();
+// });
 
 app.post('/api/contact', (req, res) => {
   const { name, email, message } = req.body;
+  const timestamp = new Date().toISOString(); // ⏰ Store date/time
 
   if (!name || !email || !message) {
     return res.status(400).json({ status: "All fields required." });
   }
 
   const db = new sqlite3.Database(path.join(__dirname, 'data', 'krml.db'));
-
-  const stmt = db.prepare("INSERT INTO contacts (name, email, message) VALUES (?, ?, ?)");
-  stmt.run(name, email, message, function (err) {
-    if (err) {
-      console.error("DB Insert Error:", err.message); // 👈 Important
-      return res.status(500).json({ status: "Error saving message." });
-    }
-    console.log("✅ Contact saved:", name, email); // 👈 Useful for Render Logs
-    res.json({ status: "Message received!" });
-  });
-
-  stmt.finalize();
-  db.close();
+  db.run("INSERT INTO contacts (name, email, message, timestamp) VALUES (?, ?, ?, ?)",
+    [name, email, message, timestamp],
+    function (err) {
+      if (err) {
+        console.error("DB Error:", err.message);
+        return res.status(500).json({ status: "Error saving message." });
+      }
+      res.json({ status: "Message received!" });
+      db.close();
+    });
 });
 
 

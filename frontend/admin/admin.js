@@ -2,6 +2,9 @@
 // __________________________________________________________________
 // JS for message 
 
+
+  
+
 // if (window.location.pathname.includes("messages.html")) {
 //     fetch('https://krml.onrender.com/api/admin/messages')
 //       .then(res => res.json())
@@ -10,7 +13,7 @@
 //         container.innerHTML = "";
   
 //         if (!messages.length) {
-//           container.innerHTML = "<p>No messages found.</p>";
+//           container.innerHTML = "<p>No messages yet.</p>";
 //           return;
 //         }
   
@@ -18,7 +21,7 @@
 //           const div = document.createElement('div');
 //           div.className = 'message-box';
 //           div.innerHTML = `
-//             <strong>${msg.name}</strong> (${msg.email})<br/>
+//             <strong>${msg.name}</strong> (<em>${msg.email}</em>)<br/>
 //             <p>${msg.message}</p>
 //             <button onclick="deleteMessage(${msg.id})">🗑️ Delete</button>
 //           `;
@@ -26,6 +29,7 @@
 //         });
 //       });
   
+//     // ✅ DELETE handler
 //     window.deleteMessage = function(id) {
 //       if (!confirm("Delete this message?")) return;
   
@@ -39,9 +43,9 @@
 //       });
 //     };
 //   }
-  
 
-if (window.location.pathname.includes("messages.html")) {
+
+function loadMessages() {
     fetch('https://krml.onrender.com/api/admin/messages')
       .then(res => res.json())
       .then(messages => {
@@ -56,30 +60,42 @@ if (window.location.pathname.includes("messages.html")) {
         messages.forEach(msg => {
           const div = document.createElement('div');
           div.className = 'message-box';
+  
+          // Format date/time
+          const time = new Date(msg.timestamp).toLocaleString();
+  
           div.innerHTML = `
             <strong>${msg.name}</strong> (<em>${msg.email}</em>)<br/>
             <p>${msg.message}</p>
+            <small>🕒 ${time}</small><br/>
             <button onclick="deleteMessage(${msg.id})">🗑️ Delete</button>
           `;
           container.appendChild(div);
         });
       });
+  }
   
-    // ✅ DELETE handler
-    window.deleteMessage = function(id) {
-      if (!confirm("Delete this message?")) return;
+  // ✅ Load on page load
+  loadMessages();
   
-      fetch(`https://krml.onrender.com/api/admin/messages/${id}`, {
-        method: 'DELETE'
-      })
+  // 🔁 Auto-refresh every 10 seconds
+  setInterval(loadMessages, 10000);
+  
+  // ❌ DELETE
+  window.deleteMessage = function (id) {
+    if (!confirm("Delete this message?")) return;
+  
+    fetch(`https://krml.onrender.com/api/admin/messages/${id}`, {
+      method: 'DELETE'
+    })
       .then(res => res.json())
       .then(data => {
         alert(data.status);
-        location.reload();
+        loadMessages();
       });
-    };
-  }
+  };
   
+
 // _______________________________________________________  
 
 //   js for login page
