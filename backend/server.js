@@ -127,7 +127,23 @@ app.get('/api/test-db', (req, res) => {
 // // // // //
 
 
+
+app.get('/download-db', (req, res) => {
+  const filePath = path.join(__dirname, 'data', 'krml.db'); // Adjust path if needed
+  res.download(filePath, 'krml-exported.db', err => {
+    if (err) {
+      console.error("❌ Error sending DB file:", err);
+      res.status(500).send("Error downloading database.");
+    } else {
+      console.log("✅ DB file sent successfully");
+    }
+  });
+});
+
+
 // Start server
 app.listen(5000, () => {
   console.log("Backend running on http://localhost:5000");
 });
+
+
