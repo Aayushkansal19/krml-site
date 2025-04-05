@@ -159,6 +159,32 @@ app.get('/api/test-db', (req, res) => {
 });
 
 
+// ✅ Admin: GET all contact messages
+app.get('/api/admin/messages', (req, res) => {
+  const db = new sqlite3.Database(path.join(__dirname, 'data', 'krml.db'));
+  db.all("SELECT * FROM contacts ORDER BY id DESC", (err, rows) => {
+    if (err) {
+      console.error("Fetch error:", err.message);
+      return res.status(500).json({ error: "Error fetching messages" });
+    }
+    res.json(rows);
+    db.close();
+  });
+});
+
+
+app.delete('/api/admin/messages/:id', (req, res) => {
+  const db = new sqlite3.Database(path.join(__dirname, 'data', 'krml.db'));
+  db.run("DELETE FROM contacts WHERE id = ?", req.params.id, function(err) {
+    if (err) {
+      console.error("Delete error:", err.message);
+      return res.status(500).json({ status: "Error deleting message" });
+    }
+    res.json({ status: "Message deleted!" });
+    db.close();
+  });
+});
+
 
 
 // __________________________________________________________________________________________________

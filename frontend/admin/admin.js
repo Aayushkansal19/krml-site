@@ -1,4 +1,45 @@
 // frontend/admin/admin.js
+// __________________________________________________________________
+// JS for message 
+
+// if (window.location.pathname.includes("messages.html")) {
+//     fetch('https://krml.onrender.com/api/admin/messages')
+//       .then(res => res.json())
+//       .then(messages => {
+//         const container = document.getElementById('messages-container');
+//         container.innerHTML = "";
+  
+//         if (!messages.length) {
+//           container.innerHTML = "<p>No messages found.</p>";
+//           return;
+//         }
+  
+//         messages.forEach(msg => {
+//           const div = document.createElement('div');
+//           div.className = 'message-box';
+//           div.innerHTML = `
+//             <strong>${msg.name}</strong> (${msg.email})<br/>
+//             <p>${msg.message}</p>
+//             <button onclick="deleteMessage(${msg.id})">🗑️ Delete</button>
+//           `;
+//           container.appendChild(div);
+//         });
+//       });
+  
+//     window.deleteMessage = function(id) {
+//       if (!confirm("Delete this message?")) return;
+  
+//       fetch(`https://krml.onrender.com/api/admin/messages/${id}`, {
+//         method: 'DELETE'
+//       })
+//       .then(res => res.json())
+//       .then(data => {
+//         alert(data.status);
+//         location.reload();
+//       });
+//     };
+//   }
+  
 
 if (window.location.pathname.includes("messages.html")) {
     fetch('https://krml.onrender.com/api/admin/messages')
@@ -8,7 +49,7 @@ if (window.location.pathname.includes("messages.html")) {
         container.innerHTML = "";
   
         if (!messages.length) {
-          container.innerHTML = "<p>No messages found.</p>";
+          container.innerHTML = "<p>No messages yet.</p>";
           return;
         }
   
@@ -16,7 +57,7 @@ if (window.location.pathname.includes("messages.html")) {
           const div = document.createElement('div');
           div.className = 'message-box';
           div.innerHTML = `
-            <strong>${msg.name}</strong> (${msg.email})<br/>
+            <strong>${msg.name}</strong> (<em>${msg.email}</em>)<br/>
             <p>${msg.message}</p>
             <button onclick="deleteMessage(${msg.id})">🗑️ Delete</button>
           `;
@@ -24,6 +65,7 @@ if (window.location.pathname.includes("messages.html")) {
         });
       });
   
+    // ✅ DELETE handler
     window.deleteMessage = function(id) {
       if (!confirm("Delete this message?")) return;
   
@@ -38,6 +80,7 @@ if (window.location.pathname.includes("messages.html")) {
     };
   }
   
+// _______________________________________________________  
 
 //   js for login page
 
@@ -77,7 +120,7 @@ function logoutAdmin() {
 
   // 🚀 Product Management Page
 
-  
+
 if (window.location.pathname.includes("products.html")) {
     const form = document.getElementById("addProductForm");
     const productList = document.getElementById("productList");
