@@ -1,0 +1,32 @@
+<!-- frontend/admin/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KRML Admin Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <a href="#" class="logout-btn" onclick="logoutAdmin()">
+        <span class="logout-icon">🚪</span> Logout
+      </a>
+      
+
+  <div class="admin-container fade-in">
+    <h1>🌾 KRML Admin Dashboard</h1>
+    <div class="card-grid">
+      <a href="messages.html" class="admin-card">
+        📨 View Messages
+        <span>Manage all user submissions</span>
+      </a>
+      <a href="products.html" class="admin-card">
+        📦 Manage Products
+        <span>Add, edit, or delete KRML items</span>
+      </a>
+    </div>
+  </div>
+  <script src="admin.js"></script>
+
+</body>
+</html>

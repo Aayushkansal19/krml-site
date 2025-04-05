@@ -1,0 +1,327 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #f1f9f2, #ffffff);
+    color: #333;
+  }
+  
+  .admin-container {
+    max-width: 900px;
+    margin: auto;
+    padding: 30px;
+    animation: fadeInUp 0.8s ease;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #2b7a0b;
+    margin-bottom: 40px;
+    font-size: 2em;
+  }
+  
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    padding: 0 20px;
+  }
+  
+  .admin-card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    text-align: center;
+    color: #2b7a0b;
+    font-size: 18px;
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .admin-card span {
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .admin-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 6px 25px rgba(0,0,0,0.2);
+  }
+  
+  .message-box {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    animation: fadeInUp 0.5s ease forwards;
+    position: relative;
+  }
+  
+  .message-box p {
+    margin-top: 8px;
+    font-size: 15px;
+  }
+  
+  .message-box button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .message-box button:hover {
+    background-color: #c9302c;
+  }
+  
+  .back-btn {
+    display: block;
+    margin-top: 30px;
+    text-align: center;
+    text-decoration: none;
+    color: #2b7a0b;
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  .fade-in {
+    animation: fadeIn 0.6s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+
+  /* css for login page */
+  .login-container {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 40px;
+    background: white;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    border-radius: 15px;
+    text-align: center;
+  }
+  
+  .login-container h2 {
+    margin-bottom: 25px;
+    color: #2b7a0b;
+  }
+  
+  #loginForm input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  #loginForm button {
+    padding: 10px 20px;
+    background-color: #2b7a0b;
+    color: white;
+    border: none;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  #loginForm button:hover {
+    background-color: #256a0a;
+  }
+  
+  /* css for log out button */
+  .logout-btn {
+    display: inline-block;
+    /* margin-top: 30px; */
+    padding: 10px 22px;
+    background: linear-gradient(135deg, #4caf50, #2b7a0b);
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    /* border-radius: 10px; */
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    font-size: 16px;
+    /* display: flex; */
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .logout-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: rgba(255,255,255,0.08);
+    transform: skewX(-25deg);
+    transition: left 0.4s ease;
+    z-index: 0;
+  }
+  
+  .logout-btn:hover::before {
+    left: 100%;
+  }
+  
+  .logout-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  }
+  
+  /* ✨ Icon animation on hover */
+  .logout-icon {
+    display: inline-block;
+    transition: transform 0.3s ease;
+  }
+  
+  .logout-btn:hover .logout-icon {
+    animation: shakeOut 0.5s ease-in-out;
+  }
+  
+  /* 🚪 Wiggle effect */
+  @keyframes shakeOut {
+    0%   { transform: translateX(0); }
+    25%  { transform: translateX(-3px); }
+    50%  { transform: translateX(3px); }
+    75%  { transform: translateX(-2px); }
+    100% { transform: translateX(0); }
+  }
+  
+  
+
+
+  /* ________________________________ */
+
+  #loginForm button {
+    width: 100%;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #2b7a0b, #4caf50);
+    color: #fff;
+    border: none;
+    font-size: 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  #loginForm button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 250%;
+    height: 100%;
+    background: rgba(255,255,255,0.1);
+    transform: skewX(-20deg);
+    transition: left 0.4s ease;
+    z-index: 0;
+  }
+  
+  #loginForm button:hover::before {
+    left: 125%;
+  }
+  
+  #loginForm button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(43, 122, 11, 0.3);
+  }
+  
+
+  /* css for product page */
+  .form-box {
+    margin-bottom: 30px;
+    padding: 25px;
+    background: #fff;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    border-radius: 12px;
+  }
+  
+  .form-box input,
+  .form-box textarea {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 12px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  .form-box button {
+    background: linear-gradient(135deg, #2b7a0b, #4caf50);
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .form-box button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+  }
+  
+  .product-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+  }
+  
+  .product-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    position: relative;
+    animation: fadeInUp 0.5s ease;
+  }
+  
+  .product-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 12px;
+  }
+  
+  .product-card button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #d9534f;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  

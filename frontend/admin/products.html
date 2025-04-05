@@ -1,0 +1,32 @@
+<!-- frontend/admin/products.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KRML Admin - Products</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="admin-container fade-in">
+    <h1>📦 Manage Products</h1>
+
+    <!-- Add Product Form -->
+    <form id="addProductForm" class="form-box">
+      <input type="text" id="productName" placeholder="Product Name" required />
+      <textarea id="productDesc" placeholder="Product Description" required></textarea>
+      <input type="number" id="productPrice" placeholder="Price (₹)" required />
+      <input type="text" id="productImage" placeholder="Image URL" required />
+      <button type="submit">➕ Add Product</button>
+      <p id="productFormStatus"></p>
+    </form>
+
+    <!-- Product List -->
+    <div id="productList" class="product-list"></div>
+
+    <a href="index.html" class="back-btn">← Back to Dashboard</a>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
