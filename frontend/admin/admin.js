@@ -220,12 +220,13 @@ if (window.location.pathname.includes("products.html")) {
 //   API for metrics on admin page
 
 if (window.location.pathname.includes("metrics.html")) {
+    let barChart, pieChart;
+  
     function fetchMetrics() {
       Promise.all([
         fetch("https://krml.onrender.com/api/admin/visits").then(res => res.json()),
         fetch("https://krml.onrender.com/api/admin/messages-count").then(res => res.json())
       ]).then(([visits, messageData]) => {
-        // Summary section
         const pageCounts = {};
         visits.forEach(v => {
           if (!pageCounts[v.page]) pageCounts[v.page] = 0;
@@ -240,57 +241,59 @@ if (window.location.pathname.includes("metrics.html")) {
           <div class="metric-box"><strong>Total Messages:</strong> ${totalMessages}</div>
         `;
   
-        // Recharts (pie + bar)
-        const chartData = Object.entries(pageCounts).map(([page, count]) => ({
-          name: page,
-          value: count
-        }));
+        // Format data
+        const labels = Object.keys(pageCounts);
+        const values = Object.values(pageCounts);
   
-        renderCharts(chartData);
+        // ✅ Destroy old charts if they exist
+        if (barChart) barChart.destroy();
+        if (pieChart) pieChart.destroy();
+  
+        // ✅ Bar Chart
+        const ctxBar = document.getElementById("barChart").getContext("2d");
+        barChart = new Chart(ctxBar, {
+          type: 'bar',
+          data: {
+            labels,
+            datasets: [{
+              label: "Visits Per Page",
+              data: values,
+              backgroundColor: 'rgba(39, 174, 96, 0.7)',
+              borderRadius: 8
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { display: false },
+              tooltip: { enabled: true }
+            }
+          }
+        });
+  
+        // ✅ Pie Chart
+        const ctxPie = document.getElementById("pieChart").getContext("2d");
+        pieChart = new Chart(ctxPie, {
+          type: 'pie',
+          data: {
+            labels,
+            datasets: [{
+              data: values,
+              backgroundColor: ['#4CAF50', '#FF9800', '#2196F3', '#9C27B0']
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { position: 'bottom' }
+            }
+          }
+        });
       });
     }
   
-    function renderCharts(data) {
-      const { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } = Recharts;
-  
-      const COLORS = ["#4caf50", "#ffc107", "#f44336", "#2196f3", "#9c27b0"];
-  
-      ReactDOM.render(
-        React.createElement("div", { className: "charts-container" }, [
-          React.createElement("h2", {}, "Page Visit Breakdown"),
-          React.createElement(ResponsiveContainer, { width: "100%", height: 250 },
-            React.createElement(BarChart, { data },
-              React.createElement(XAxis, { dataKey: "name" }),
-              React.createElement(YAxis, {}),
-              React.createElement(Tooltip, {}),
-              React.createElement(Bar, { dataKey: "value", fill: "#2b7a0b" })
-            )
-          ),
-          React.createElement(ResponsiveContainer, { width: "100%", height: 300 },
-            React.createElement(PieChart, {},
-              React.createElement(Pie, {
-                data,
-                dataKey: "value",
-                nameKey: "name",
-                cx: "50%",
-                cy: "50%",
-                outerRadius: 100,
-                fill: "#8884d8",
-                label: true
-              }, data.map((entry, index) =>
-                React.createElement(Cell, { key: index, fill: COLORS[index % COLORS.length] })
-              )),
-              React.createElement(Tooltip, {}),
-              React.createElement(Legend, {})
-            )
-          )
-        ]),
-        document.getElementById("chart-root")
-      );
-    }
-  
+    // ✅ Initial fetch + auto refresh
     fetchMetrics();
-    setInterval(fetchMetrics, 15000); // 🔁 Auto-refresh every 15 sec
+    setInterval(fetchMetrics, 15000);
   }
-  
   

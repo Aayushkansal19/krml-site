@@ -6,16 +6,23 @@
   <link rel="stylesheet" href="styles.css">
   <!-- ✅ Recharts CDN -->
   <script src="https://cdn.jsdelivr.net/npm/react@18/umd/react.development.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.development.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/recharts/umd/Recharts.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/recharts/umd/Recharts.min.js"></script>
+
+
+
 </head>
 <body>
-  <div class="admin-container fade-in">
-    <h1>📊 KRML Site Metrics</h1>
-    <div id="metrics-summary" class="metric-summary"></div>
-    <div id="chart-root"></div>
-    <a href="index.html" class="back-btn">← Back to Dashboard</a>
-  </div>
-  <script src="admin.js"></script>
-</body>
+    <div class="admin-container fade-in">
+      <h1>📊 KRML Site Metrics</h1>
+      <div id="metrics-summary" class="metric-summary"></div>
+  
+      <!-- ✅ Charts -->
+      <canvas id="barChart" style="max-width: 700px; margin: 20px auto;"></canvas>
+      <canvas id="pieChart" style="max-width: 700px; margin: 20px auto;"></canvas>
+  
+      <a href="index.html" class="back-btn">← Back to Dashboard</a>
+    </div>
+    <script src="admin.js"></script>
+  </body>
 </html>
