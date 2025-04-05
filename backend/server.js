@@ -59,11 +59,17 @@ app.post('/api/admin/products', (req, res) => {
 
   const db = new sqlite3.Database(path.join(__dirname, 'data', 'krml.db'));
   const stmt = db.prepare("INSERT INTO products (name, description, price, image) VALUES (?, ?, ?, ?)");
-  stmt.run(name, description, price, image, function(err) {
-    if (err) return res.status(500).json({ status: "Error saving product." });
+
+  stmt.run(name, description, price, image, function (err) {
+    if (err) {
+      console.error("DB Insert Error:", err.message);
+      return res.status(500).json({ status: "Error saving product." });
+    }
     res.json({ status: "Product added!" });
-    db.close();
   });
+
+  stmt.finalize(); // ✅ finalize before closing
+  db.close();
 });
 
 // ❌ DELETE a product
@@ -71,12 +77,19 @@ app.delete('/api/admin/products/:id', (req, res) => {
   const id = req.params.id;
   const db = new sqlite3.Database(path.join(__dirname, 'data', 'krml.db'));
 
-  db.run("DELETE FROM products WHERE id = ?", id, function(err) {
-    if (err) return res.status(500).json({ status: "Error deleting product." });
+  const stmt = db.prepare("DELETE FROM products WHERE id = ?");
+  stmt.run(id, function (err) {
+    if (err) {
+      console.error("Delete error:", err.message);
+      return res.status(500).json({ status: "Error deleting product." });
+    }
     res.json({ status: "Product deleted!" });
-    db.close();
   });
+
+  stmt.finalize(); // ✅ prevent SQLITE_BUSY
+  db.close();
 });
+
 
 // __________________________________________
 
