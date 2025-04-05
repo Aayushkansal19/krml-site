@@ -102,6 +102,14 @@
   <a href="https://wa.me/7368027565" class="whatsapp-float" target="_blank" title="Chat with us on WhatsApp">
     <img src="assets/icons/whatsapp.svg" alt="WhatsApp Chat">
   </a>
-
 </body>
+
+<script>
+  fetch(`${window.location.origin}/api/track`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ page: "About" })
+  });
+</script>
+
 </html>
