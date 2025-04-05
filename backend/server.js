@@ -36,11 +36,12 @@ const db = new sqlite3.Database(path.join(__dirname, 'data', 'krml.db'));
 //   });
 // });
 
-const dbPath = path.join(__dirname, 'data', 'krml.db');
+// const dbPath = path.join(__dirname, 'data', 'krml.db');
 
 // 📦 GET all products
 app.get('/api/admin/products', (req, res) => {
-  const db = new sqlite3.Database(dbPath);
+  // const db = new sqlite3.Database(dbPath);
+  const db = new sqlite3.Database(path.join(__dirname, 'data', 'krml.db'));
   db.all("SELECT * FROM products ORDER BY id DESC", (err, rows) => {
     if (err) return res.status(500).json({ error: err.message });
     res.json(rows);
@@ -56,7 +57,7 @@ app.post('/api/admin/products', (req, res) => {
     return res.status(400).json({ status: "All fields required." });
   }
 
-  const db = new sqlite3.Database(dbPath);
+  const db = new sqlite3.Database(path.join(__dirname, 'data', 'krml.db'));
   const stmt = db.prepare("INSERT INTO products (name, description, price, image) VALUES (?, ?, ?, ?)");
   stmt.run(name, description, price, image, function(err) {
     if (err) return res.status(500).json({ status: "Error saving product." });
@@ -68,7 +69,7 @@ app.post('/api/admin/products', (req, res) => {
 // ❌ DELETE a product
 app.delete('/api/admin/products/:id', (req, res) => {
   const id = req.params.id;
-  const db = new sqlite3.Database(dbPath);
+  const db = new sqlite3.Database(path.join(__dirname, 'data', 'krml.db'));
 
   db.run("DELETE FROM products WHERE id = ?", id, function(err) {
     if (err) return res.status(500).json({ status: "Error deleting product." });
