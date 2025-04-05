@@ -21,6 +21,7 @@ app.get('/', (req, res) => {
 // Connect SQLite database
 const db = new sqlite3.Database('./data/krml.db');
 
+
 // API to GET products
 app.get('/api/products', (req, res) => {
   db.all("SELECT * FROM products", [], (err, rows) => {
