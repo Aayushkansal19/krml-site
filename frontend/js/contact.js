@@ -35,7 +35,8 @@ document.getElementById('contactForm').addEventListener('submit', function (e) {
   const message = document.getElementById('message').value.trim();
   const statusDiv = document.getElementById('form-status');
 
-  fetch('https://krml.onrender.com/api/contact', {
+  // fetch('https://krml.onrender.com/api/contact', {
+    fetch('http://localhost:5000/api/contact', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
