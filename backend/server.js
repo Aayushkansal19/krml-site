@@ -85,6 +85,16 @@ app.post('/api/contact', (req, res) => {
 
 
 
+app.get('/api/test-db', (req, res) => {
+  const db = new sqlite3.Database(path.join(__dirname, 'data', 'krml.db'));
+  db.all("SELECT * FROM contacts", (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
+});
+
+
+
 
 // __________________________________________________________________________________________________
 
