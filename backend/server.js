@@ -36,28 +36,28 @@ app.get('/api/products', (req, res) => {
 
 // API to POST contact form submissions
 
-app.post('/api/contact', (req, res) => {
-  const { name, email, message } = req.body;
-  db.run(`INSERT INTO contacts (name, email, message) VALUES (?, ?, ?)`, [name, email, message],
-    (err) => {
-      if (err) return res.status(500).json({error: err.message});
-      res.json({status: "Message received!"});
-    });
-});
-
-
 // app.post('/api/contact', (req, res) => {
 //   const { name, email, message } = req.body;
-
-//   const stmt = db.prepare("INSERT INTO contacts (name, email, message) VALUES (?, ?, ?)");
-//   stmt.run(name, email, message, function (err) {
-//     if (err) {
-//       console.error("DB Error:", err);
-//       return res.status(500).json({ status: "Error saving message." });
-//     }
-//     res.json({ status: "Message sent!" });
-//   });
+//   db.run(`INSERT INTO contacts (name, email, message) VALUES (?, ?, ?)`, [name, email, message],
+//     (err) => {
+//       if (err) return res.status(500).json({error: err.message});
+//       res.json({status: "Message received!"});
+//     });
 // });
+
+
+app.post('/api/contact', (req, res) => {
+  const { name, email, message } = req.body;
+
+  const stmt = db.prepare("INSERT INTO contacts (name, email, message) VALUES (?, ?, ?)");
+  stmt.run(name, email, message, function (err) {
+    if (err) {
+      console.error("DB Error:", err);
+      return res.status(500).json({ status: "Error saving message." });
+    }
+    res.json({ status: "Message sent!" });
+  });
+});
 
 // __________________________________________________________________________________________________
 
