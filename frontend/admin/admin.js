@@ -220,20 +220,77 @@ if (window.location.pathname.includes("products.html")) {
 //   API for metrics on admin page
 
 if (window.location.pathname.includes("metrics.html")) {
-    fetch('https://krml.onrender.com/api/admin/visits')
-      .then(res => res.json())
-      .then(data => {
-        const container = document.getElementById('metrics-summary');
+    function fetchMetrics() {
+      Promise.all([
+        fetch("https://krml.onrender.com/api/admin/visits").then(res => res.json()),
+        fetch("https://krml.onrender.com/api/admin/messages-count").then(res => res.json())
+      ]).then(([visits, messageData]) => {
+        // Summary section
         const pageCounts = {};
-  
-        data.forEach(v => {
+        visits.forEach(v => {
           if (!pageCounts[v.page]) pageCounts[v.page] = 0;
           pageCounts[v.page]++;
         });
   
-        container.innerHTML = Object.entries(pageCounts).map(([page, count]) =>
-          `<div class="metric-box"><strong>${page}</strong>: ${count} visits</div>`
-        ).join('');
+        const totalVisits = visits.length;
+        const totalMessages = messageData.total;
+  
+        document.getElementById("metrics-summary").innerHTML = `
+          <div class="metric-box"><strong>Total Visits:</strong> ${totalVisits}</div>
+          <div class="metric-box"><strong>Total Messages:</strong> ${totalMessages}</div>
+        `;
+  
+        // Recharts (pie + bar)
+        const chartData = Object.entries(pageCounts).map(([page, count]) => ({
+          name: page,
+          value: count
+        }));
+  
+        renderCharts(chartData);
       });
+    }
+  
+    function renderCharts(data) {
+      const { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } = Recharts;
+  
+      const COLORS = ["#4caf50", "#ffc107", "#f44336", "#2196f3", "#9c27b0"];
+  
+      ReactDOM.render(
+        React.createElement("div", { className: "charts-container" }, [
+          React.createElement("h2", {}, "Page Visit Breakdown"),
+          React.createElement(ResponsiveContainer, { width: "100%", height: 250 },
+            React.createElement(BarChart, { data },
+              React.createElement(XAxis, { dataKey: "name" }),
+              React.createElement(YAxis, {}),
+              React.createElement(Tooltip, {}),
+              React.createElement(Bar, { dataKey: "value", fill: "#2b7a0b" })
+            )
+          ),
+          React.createElement(ResponsiveContainer, { width: "100%", height: 300 },
+            React.createElement(PieChart, {},
+              React.createElement(Pie, {
+                data,
+                dataKey: "value",
+                nameKey: "name",
+                cx: "50%",
+                cy: "50%",
+                outerRadius: 100,
+                fill: "#8884d8",
+                label: true
+              }, data.map((entry, index) =>
+                React.createElement(Cell, { key: index, fill: COLORS[index % COLORS.length] })
+              )),
+              React.createElement(Tooltip, {}),
+              React.createElement(Legend, {})
+            )
+          )
+        ]),
+        document.getElementById("chart-root")
+      );
+    }
+  
+    fetchMetrics();
+    setInterval(fetchMetrics, 15000); // 🔁 Auto-refresh every 15 sec
   }
+  
   

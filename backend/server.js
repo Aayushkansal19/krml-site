@@ -276,6 +276,16 @@ app.get('/api/admin/visits', (req, res) => {
     db.close();
   });
 });
+// add message count PI
+
+app.get('/api/admin/messages-count', (req, res) => {
+  const db = new sqlite3.Database(path.join(__dirname, 'data', 'krml.db'));
+  db.get("SELECT COUNT(*) as total FROM contacts", (err, row) => {
+    if (err) return res.status(500).json({ error: "Failed to count messages" });
+    res.json(row);
+    db.close();
+  });
+});
 
 
 
