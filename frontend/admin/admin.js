@@ -217,4 +217,23 @@ if (window.location.pathname.includes("products.html")) {
     // 🚀 Load products on page load
     loadProducts();
   }
+//   API for metrics on admin page
+
+if (window.location.pathname.includes("metrics.html")) {
+    fetch('https://krml.onrender.com/api/admin/visits')
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById('metrics-summary');
+        const pageCounts = {};
+  
+        data.forEach(v => {
+          if (!pageCounts[v.page]) pageCounts[v.page] = 0;
+          pageCounts[v.page]++;
+        });
+  
+        container.innerHTML = Object.entries(pageCounts).map(([page, count]) =>
+          `<div class="metric-box"><strong>${page}</strong>: ${count} visits</div>`
+        ).join('');
+      });
+  }
   

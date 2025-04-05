@@ -37,6 +37,13 @@ db.run(`INSERT INTO products (name, description, price, image) VALUES
   ('Maida', 'Refined wheat flour perfect for baking and snacks.', 55, 'assets/images/maida.jpg'),
   ('Sooji', 'Coarse semolina, ideal for halwa, idli, and upma.', 40, 'assets/images/sooji.jpg')
 `);
-
+// table to see the visitors on mmy site
+db.run(`
+  CREATE TABLE IF NOT EXISTS visits (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    page TEXT,
+    timestamp TEXT
+  )
+`);
 
 db.close();

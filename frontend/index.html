@@ -237,5 +237,12 @@
     </a>
 
   </body>
+  <script>
+    fetch('https://krml.onrender.com/api/track', {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ page: "Home" })
+    });
+  </script>
   
 </html>

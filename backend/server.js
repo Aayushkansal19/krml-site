@@ -244,6 +244,41 @@ app.get('/api/products', (req, res) => {
   });
 });
 
+
+// API to see the visitors on my site
+
+app.post('/api/track', (req, res) => {
+  const page = req.body.page;
+  const timestamp = new Date().toISOString();
+
+  if (!page) return res.status(400).json({ error: "Page is required" });
+
+  const db = new sqlite3.Database(path.join(__dirname, 'data', 'krml.db'));
+  db.run("INSERT INTO visits (page, timestamp) VALUES (?, ?)", [page, timestamp], (err) => {
+    if (err) {
+      console.error("Tracking error:", err.message);
+      return res.status(500).json({ error: "Failed to track" });
+    }
+    res.json({ status: "Tracked" });
+    db.close();
+  });
+});
+
+// API to get metrics
+app.get('/api/admin/visits', (req, res) => {
+  const db = new sqlite3.Database(path.join(__dirname, 'data', 'krml.db'));
+  db.all("SELECT * FROM visits ORDER BY timestamp DESC", (err, rows) => {
+    if (err) {
+      console.error("Error fetching metrics:", err.message);
+      return res.status(500).json({ error: "Metrics fetch failed" });
+    }
+    res.json(rows);
+    db.close();
+  });
+});
+
+
+
 // Start server
 app.listen(5000, () => {
   console.log("Backend running on http://localhost:5000");
