@@ -45,5 +45,7 @@ db.run(`
     timestamp TEXT
   )
 `);
+db.run(`ALTER TABLE visits ADD COLUMN ip TEXT`, (err) => {});
+db.run(`ALTER TABLE visits ADD COLUMN location TEXT`, (err) => {});
 
 db.close();

@@ -245,24 +245,64 @@ app.get('/api/products', (req, res) => {
 });
 
 
-// API to see the visitors on my site
+// API to see the visitors on my site_____________________
 
-app.post('/api/track', (req, res) => {
+// app.post('/api/track', (req, res) => {
+//   const page = req.body.page;
+//   const timestamp = new Date().toISOString();
+
+//   if (!page) return res.status(400).json({ error: "Page is required" });
+
+//   const db = new sqlite3.Database(path.join(__dirname, 'data', 'krml.db'));
+//   db.run("INSERT INTO visits (page, timestamp) VALUES (?, ?)", [page, timestamp], (err) => {
+//     if (err) {
+//       console.error("Tracking error:", err.message);
+//       return res.status(500).json({ error: "Failed to track" });
+//     }
+//     res.json({ status: "Tracked" });
+//     db.close();
+//   });
+// });
+
+
+const axios = require("axios");
+
+app.post('/api/track', async (req, res) => {
   const page = req.body.page;
   const timestamp = new Date().toISOString();
 
-  if (!page) return res.status(400).json({ error: "Page is required" });
+  const ip =
+    req.headers['x-forwarded-for']?.split(',')[0] ||
+    req.connection.remoteAddress;
+
+  let location = "Unknown";
+
+  try {
+    const response = await axios.get(`https://ipapi.co/${ip}/json/`);
+    const { city, region, country_name } = response.data;
+    location = `${city || "Unknown"}, ${region || ""}, ${country_name || ""}`;
+  } catch (err) {
+    console.error("Location fetch failed:", err.message);
+  }
 
   const db = new sqlite3.Database(path.join(__dirname, 'data', 'krml.db'));
-  db.run("INSERT INTO visits (page, timestamp) VALUES (?, ?)", [page, timestamp], (err) => {
-    if (err) {
-      console.error("Tracking error:", err.message);
-      return res.status(500).json({ error: "Failed to track" });
+  db.run(
+    "INSERT INTO visits (page, timestamp, ip, location) VALUES (?, ?, ?, ?)",
+    [page, timestamp, ip, location],
+    (err) => {
+      if (err) {
+        console.error("Track error:", err.message);
+        return res.status(500).json({ error: "Failed to track" });
+      }
+      res.json({ status: "Tracked" });
+      db.close();
     }
-    res.json({ status: "Tracked" });
-    db.close();
-  });
+  );
 });
+
+// ___________________________________
+
+
 
 // API to get metrics
 app.get('/api/admin/visits', (req, res) => {

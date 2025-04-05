@@ -291,9 +291,30 @@ if (window.location.pathname.includes("metrics.html")) {
       });
     }
   
+
+
+    // 🗂️ Show recent 5 visits with page + location + time
+const visitTable = visits
+.slice(0, 5)
+.map(v => `
+  <div style="margin-bottom: 8px;">
+    <strong>${v.page}</strong> — ${v.location} <br/>
+    <small>🕒 ${new Date(v.timestamp).toLocaleString()}</small>
+  </div>
+`)
+.join('');
+
+document.getElementById("recent-visits").innerHTML = `
+<h3 style="margin-bottom: 10px;">🌐 Recent Visitors</h3>
+${visitTable}
+`;
+
+    
+    
     fetchMetrics();
     setInterval(fetchMetrics, 15000); // Refresh every 15 seconds
   }
+
 
   
   
