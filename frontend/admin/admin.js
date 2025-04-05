@@ -238,12 +238,15 @@ if (window.location.pathname.includes("metrics.html")) {
           </div>
         `)
         .join('');
-      
+        console.log("Visits data:", visits);
+        console.log("Messages count:", messageData);
+
       document.getElementById("recent-visits").innerHTML = `
         <h3 style="margin-bottom: 10px;">🌐 Recent Visitors</h3>
         ${visitTable}
       `;
-      
+    
+
         const labels = Object.keys(pageCounts);
         const values = Object.values(pageCounts);
   
