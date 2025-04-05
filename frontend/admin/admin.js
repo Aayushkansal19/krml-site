@@ -222,10 +222,12 @@ if (window.location.pathname.includes("products.html")) {
 if (window.location.pathname.includes("metrics.html")) {
     let barChart, pieChart;
   
+    const BASE_URL = window.location.origin;
+  
     function fetchMetrics() {
       Promise.all([
-        fetch("https://krml.onrender.com/api/admin/visits").then(res => res.json()),
-        fetch("https://krml.onrender.com/api/admin/messages-count").then(res => res.json())
+        fetch(`${BASE_URL}/api/admin/visits`).then(res => res.json()),
+        fetch(`${BASE_URL}/api/admin/messages-count`).then(res => res.json())
       ]).then(([visits, messageData]) => {
         const pageCounts = {};
         visits.forEach(v => {
@@ -241,15 +243,13 @@ if (window.location.pathname.includes("metrics.html")) {
           <div class="metric-box"><strong>Total Messages:</strong> ${totalMessages}</div>
         `;
   
-        // Format data
         const labels = Object.keys(pageCounts);
         const values = Object.values(pageCounts);
   
-        // ✅ Destroy old charts if they exist
+        // Destroy old charts if they exist
         if (barChart) barChart.destroy();
         if (pieChart) pieChart.destroy();
   
-        // ✅ Bar Chart
         const ctxBar = document.getElementById("barChart").getContext("2d");
         barChart = new Chart(ctxBar, {
           type: 'bar',
@@ -258,8 +258,8 @@ if (window.location.pathname.includes("metrics.html")) {
             datasets: [{
               label: "Visits Per Page",
               data: values,
-              backgroundColor: 'rgba(39, 174, 96, 0.7)',
-              borderRadius: 8
+              backgroundColor: '#4caf50',
+              borderRadius: 6
             }]
           },
           options: {
@@ -271,7 +271,6 @@ if (window.location.pathname.includes("metrics.html")) {
           }
         });
   
-        // ✅ Pie Chart
         const ctxPie = document.getElementById("pieChart").getContext("2d");
         pieChart = new Chart(ctxPie, {
           type: 'pie',
@@ -292,8 +291,9 @@ if (window.location.pathname.includes("metrics.html")) {
       });
     }
   
-    // ✅ Initial fetch + auto refresh
     fetchMetrics();
-    setInterval(fetchMetrics, 15000);
+    setInterval(fetchMetrics, 15000); // Refresh every 15 seconds
   }
+
+  
   
