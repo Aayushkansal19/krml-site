@@ -89,43 +89,93 @@ document.addEventListener('DOMContentLoaded', () => {
   // });
   
 
-  fetch('https://krml.onrender.com/api/products')
-  .then(res => res.json())
-  .then(products => {
-    console.log("Fetched products:", products); // 👈 ADD THIS
-    const container = document.getElementById('product-container');
-    container.innerHTML = "";
+  // fetch('https://krml.onrender.com/api/products')
+  // .then(res => res.json())
+  // .then(products => {
+  //   console.log("Fetched products:", products); // 👈 ADD THIS
+  //   const container = document.getElementById('product-container');
+  //   container.innerHTML = "";
 
-    products.forEach(product => {
-      const card = document.createElement('div');
-      card.className = 'product-card fade-in';
+  //   products.forEach(product => {
+  //     const card = document.createElement('div');
+  //     card.className = 'product-card fade-in';
 
-      const qrContainerId = `qrcode-${product.id}`;
+  //     const qrContainerId = `qrcode-${product.id}`;
 
-      card.innerHTML = `
-        <img src="${product.image}" alt="${product.name}" class="product-img">
-        <div class="product-info">
-          <h2>${product.name}</h2>
-          <p>${product.description}</p>
-          <p class="price">₹${product.price}</p>
-          <div id="${qrContainerId}" class="qrcode"></div>
-          <a href="assets/brochures/${product.name.toLowerCase().replace(/\s/g, '-')}.pdf" download class="download-btn">Download Brochure</a>
-        </div>
-      `;
+  //     card.innerHTML = `
+  //       <img src="${product.image}" alt="${product.name}" class="product-img">
+  //       <div class="product-info">
+  //         <h2>${product.name}</h2>
+  //         <p>${product.description}</p>
+  //         <p class="price">₹${product.price}</p>
+  //         <div id="${qrContainerId}" class="qrcode"></div>
+  //         <a href="assets/brochures/${product.name.toLowerCase().replace(/\s/g, '-')}.pdf" download class="download-btn">Download Brochure</a>
+  //       </div>
+  //     `;
 
-      container.appendChild(card);
+  //     container.appendChild(card);
 
-      new QRCode(document.getElementById(qrContainerId), {
-        text: `assets/brochures/${product.name.toLowerCase().replace(/\s/g, '-')}.pdf`,
-        width: 100,
-        height: 100,
+  //     new QRCode(document.getElementById(qrContainerId), {
+  //       text: `assets/brochures/${product.name.toLowerCase().replace(/\s/g, '-')}.pdf`,
+  //       width: 100,
+  //       height: 100,
+  //     });
+  //   });
+  // })
+  // .catch(err => {
+  //   console.error("Product loading failed:", err);
+  //   document.getElementById('product-container').innerHTML = "<p>Error loading products. Try again later.</p>";
+  // });
+
+  function loadProducts() {
+    fetch('https://krml.onrender.com/api/products')
+      .then(res => res.json())
+      .then(products => {
+        const container = document.getElementById('product-container');
+        container.innerHTML = ""; // clear previous products
+  
+        products.forEach(product => {
+          const card = document.createElement('div');
+          card.className = 'product-card fade-in';
+  
+          const qrContainerId = `qrcode-${product.id}`;
+  
+          card.innerHTML = `
+            <img src="${product.image}" alt="${product.name}" class="product-img">
+            <div class="product-info">
+              <h2>${product.name}</h2>
+              <p>${product.description}</p>
+              <p class="price">₹${product.price}</p>
+              <div id="${qrContainerId}" class="qrcode"></div>
+              <a href="assets/brochures/${product.name.toLowerCase().replace(/\s/g, '-')}.pdf" download class="download-btn">Download Brochure</a>
+            </div>
+          `;
+  
+          container.appendChild(card);
+  
+          // 🧾 Generate QR code
+          new QRCode(document.getElementById(qrContainerId), {
+            text: `assets/brochures/${product.name.toLowerCase().replace(/\s/g, '-')}.pdf`,
+            width: 100,
+            height: 100,
+          });
+        });
+      })
+      .catch(err => {
+        console.error("Product loading failed:", err);
+        document.getElementById('product-container').innerHTML =
+          "<p>Error loading products. Try again later.</p>";
       });
-    });
-  })
-  .catch(err => {
-    console.error("Product loading failed:", err);
-    document.getElementById('product-container').innerHTML = "<p>Error loading products. Try again later.</p>";
-  });
+  }
+  
+  // ✅ Load products when page first loads
+  loadProducts();
+  
+  // 🔁 Refresh products automatically every 15 seconds (15000 ms)
+  setInterval(loadProducts, 15000);
+  
+
+
 });
 
 
