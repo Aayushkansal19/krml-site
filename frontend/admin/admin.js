@@ -229,20 +229,21 @@ if (window.location.pathname.includes("metrics.html")) {
         fetch(`${BASE_URL}/api/admin/visits`).then(res => res.json()),
         fetch(`${BASE_URL}/api/admin/messages-count`).then(res => res.json())
       ]).then(([visits, messageData]) => {
-        const pageCounts = {};
-        visits.forEach(v => {
-          if (!pageCounts[v.page]) pageCounts[v.page] = 0;
-          pageCounts[v.page]++;
-        });
-  
-        const totalVisits = visits.length;
-        const totalMessages = messageData.total;
-  
-        document.getElementById("metrics-summary").innerHTML = `
-          <div class="metric-box"><strong>Total Visits:</strong> ${totalVisits}</div>
-          <div class="metric-box"><strong>Total Messages:</strong> ${totalMessages}</div>
-        `;
-  
+        const visitTable = visits
+        .slice(0, 5)
+        .map(v => `
+          <div style="margin-bottom: 8px;">
+            <strong>${v.page}</strong> — ${v.location || "Unknown Location"} <br/>
+            <small>🕒 ${new Date(v.timestamp).toLocaleString()}</small>
+          </div>
+        `)
+        .join('');
+      
+      document.getElementById("recent-visits").innerHTML = `
+        <h3 style="margin-bottom: 10px;">🌐 Recent Visitors</h3>
+        ${visitTable}
+      `;
+      
         const labels = Object.keys(pageCounts);
         const values = Object.values(pageCounts);
   
