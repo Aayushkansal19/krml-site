@@ -50,19 +50,6 @@ app.get('/api/admin/products', (req, res) => {
 });
 
 
-// 🌐 Public API to fetch products for main site
-app.get('/api/products', (req, res) => {
-  const db = new sqlite3.Database(path.join(__dirname, 'data', 'krml.db'));
-
-  db.all("SELECT * FROM products ORDER BY id DESC", (err, rows) => {
-    if (err) {
-      return res.status(500).json({ error: err.message });
-    }
-
-    res.json(rows);
-    db.close();
-  });
-});
 
 
 
@@ -218,6 +205,19 @@ app.get('/api/test-db', (req, res) => {
 //   });
 // });
 
+// 🌐 Public API to fetch products for main site
+app.get('/api/products', (req, res) => {
+  const db = new sqlite3.Database(path.join(__dirname, 'data', 'krml.db'));
+
+  db.all("SELECT * FROM products ORDER BY id DESC", (err, rows) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+
+    res.json(rows);
+    db.close();
+  });
+});
 
 // Start server
 app.listen(5000, () => {
