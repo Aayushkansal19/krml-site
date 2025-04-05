@@ -1,0 +1,9 @@
+# Ignore node dependencies
+node_modules/
+
+# Ignore environment/config files
+.env
+
+# Ignore SQLite or DB files
+*.sqlite
+*.db
