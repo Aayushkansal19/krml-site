@@ -1,0 +1,182 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-image: url('assets/wheat-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.07;
+    z-index: -1;
+  }
+    
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #fffdf6;
+    color: #333;
+    scroll-behavior: smooth;
+    line-height: 1.6;
+  }
+  
+  header.journey-header {
+    text-align: center;
+    padding: 80px 20px 40px;
+    background: linear-gradient(135deg, #fdf6e3, #ffffff);
+  }
+  
+  header.journey-header h1 {
+    font-size: 2.8rem;
+    color: #4A7747;
+    font-family: 'Playfair Display', serif;
+  }
+  
+  header.journey-header p {
+    margin-top: 10px;
+    font-size: 1.1rem;
+    color: #555;
+  }
+  
+  #journey-container {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  
+  /* Step Section Styling */
+  .journey-step {
+    padding: 100px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(60px);
+    transition: all 0.8s ease-out;
+  }
+  
+  .journey-step.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .journey-step img {
+    max-width: 300px;
+    height: auto;
+    margin-bottom: 25px;
+    transition: transform 0.5s ease;
+  }
+  
+  .journey-step h2 {
+    font-size: 2rem;
+    color: #4A7747;
+    margin-bottom: 10px;
+  }
+  
+  .journey-step p {
+    max-width: 600px;
+    font-size: 1.05rem;
+    color: #444;
+  }
+  
+  /* Animate image pop on scroll */
+  .journey-step.visible img {
+    transform: scale(1.05);
+  }
+  
+  /* Footer */
+  .journey-footer {
+    text-align: center;
+    padding: 30px 20px;
+    background-color: #4A7747;
+    color: #fff;
+    font-size: 0.9rem;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .journey-step {
+      padding: 80px 15px;
+    }
+  
+    .journey-step h2 {
+      font-size: 1.6rem;
+    }
+  
+    .journey-step p {
+      font-size: 1rem;
+    }
+  
+    .journey-step img {
+      max-width: 250px;
+    }
+  }
+  
+
+  .journey-step.visible h2 {
+    animation: glowFade 1s ease-in-out forwards;
+  }
+  
+  @keyframes glowFade {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+      text-shadow: none;
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+      text-shadow: 0 2px 10px rgba(230, 179, 37, 0.4);
+    }
+  }
+  #muteBtn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 9999;
+    background-color: #E6B325;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+
+
+
+/*  */
+/*  */
+
+.journey-return {
+    text-align: center;
+    margin: 50px 0;
+  }
+  
+  .back-journey-btn {
+    background-color: #E6B325;
+    color: #fff;
+    padding: 12px 24px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+  
+  .back-journey-btn:hover {
+    background-color: #c79c1a;
+    transform: scale(1.05);
+  }
+  

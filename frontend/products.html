@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore premium flour products from KRML">
+    <!-- SEO Meta Tags -->
+    <meta property="og:title" content="KRML Premium Flour Products">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://localhost/frontend/">
+    <meta property="og:image" content="http://localhost/frontend/assets/images/og-image.jpg">
+    <meta property="og:description" content="Premium quality flour products including Maida, Sooji, Rawa, Chakki Atta, and MP Atta.">
+
+    <!-- Twitter Card (optional but recommended) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="KRML Premium Flour Products">
+    <meta name="twitter:description" content="Purity and freshness in every grain.">
+    <meta name="twitter:image" content="http://localhost/frontend/assets/images/og-image.jpg">
+
+    <meta name="description" content="Explore KRML's high-quality flour products including Maida, Sooji, Chakki Atta, MP Atta and more.">
+    <title>Products – KRML Premium Flour</title>
+    
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="logo">KRML</div>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  <!-- <a href="assets/brochures/krml-product-brochure.pdf" download class="brochure-btn">Download Our Brochure</a> -->
+  <main>
+    <section class="product-hero">
+      <h1>Our Premium Products</h1>
+      <p>Finest quality flour products crafted with purity and tradition.</p>
+      <!-- <a href="assets/brochures/krml-product-brochure.pdf" download class="brochure-btn">Download Our Brochure</a> -->
+      <!-- <a href="assets/brochures/krml-product-brochure.pdf" download class="brochure-btn">Download Our Brochure</a> -->
+    </section>
+    <!-- <a href="assets/brochures/krml-product-brochure.pdf" download class="brochure-btn">Download Our Brochure</a>     -->
+    <section class="products" id="product-container">
+      <!-- Dynamic products will be inserted here by JS -->
+    </section>
+  </main>
+  <!-- Nutritional value chart -->
+  <!-- <section class="nutrition-section">
+    <h2>Typical Nutritional Value (Per 100g)</h2>
+    <canvas id="nutritionChart" width="400" height="200"></canvas>
+  </section>
+   -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-logo">
+        <h3>KRML</h3>
+        <p>Purity in every grain. Nourishing homes with tradition and trust.</p>
+      </div>
+  
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+  
+      <div class="footer-contact">
+        <h4>Contact</h4>
+        <p><strong>Email:</strong> support@krml.com</p>
+        <p><strong>Phone:</strong> +91 99999 88888</p>
+        <p><strong>Address:</strong> Hapur, Uttar Pradesh, India</p>
+      </div>
+    </div>
+  
+    <div class="footer-bottom">
+      <p>&copy; 2025 KRML. All rights reserved.</p>
+    </div>
+  </footer>
+  
+
+  <script src="js/main.js"></script>
+  <a href="https://wa.me/7368027565" class="whatsapp-float" target="_blank" title="Chat with us on WhatsApp">
+    <img src="assets/icons/whatsapp.svg" alt="WhatsApp Chat">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Nutritional value chart javascript -->
+    <!-- <script>
+      const ctx = document.getElementById('nutritionChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Protein', 'Fiber', 'Iron', 'Carbs'],
+          datasets: [{
+            label: 'Chakki Atta',
+            data: [12, 10, 2.3, 68],
+            backgroundColor: ['#4A7747', '#E6B325', '#aaa', '#d3d3d3']
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    </script> -->
+    
+
+  </a>
+
+  <!-- qrcode show -->
+<!-- 
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get("id");
+  
+    if (productId) {
+      fetch(`/api/products`)
+        .then(res => res.json())
+        .then(products => {
+          const product = products.find(p => p.id == productId);
+          if (product) {
+            document.body.innerHTML = `
+              <h1>${product.name}</h1>
+              <img src="assets/images/${product.image}" alt="${product.name}" width="300">
+              <p>${product.description}</p>
+              <p>Price: ₹${product.price}</p>
+              <a href="products.html">🔙 Back to all products</a>
+            `;
+          }
+        });
+    }
+  </script>
+   -->
+
+  <!-- <a href="http://localhost:5000/api/qr/1" target="_blank">🔳 Get QR Code</a> -->
+
+<!--  -->
+<!--  -->
+</body>
+</html>
