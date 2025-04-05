@@ -10,22 +10,23 @@ db.serialize(() => {
     image TEXT
   )`);
 
-  // db.run(`CREATE TABLE IF NOT EXISTS contacts (
-  //   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  //   name TEXT,
-  //   email TEXT,
-  //   message TEXT,
-  //   created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-  // )`);
+  db.run(`CREATE TABLE IF NOT EXISTS contacts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    email TEXT,
+    message TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  )`);
+
   db.run(`
-    CREATE TABLE IF NOT EXISTS contacts (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT,
-      email TEXT,
-      message TEXT,
-      timestamp TEXT
-    )
-  `);
+    ALTER TABLE contacts ADD COLUMN timestamp TEXT
+  `, (err) => {
+    if (err && !err.message.includes("duplicate column name")) {
+      console.error("Error adding timestamp column:", err.message);
+    } else {
+      console.log("✅ Timestamp column ready");
+    }
+  });
   
 
   console.log('Database & tables created successfully.');
