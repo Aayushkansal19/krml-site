@@ -34,9 +34,10 @@ document.addEventListener('DOMContentLoaded', () => {
     //         width: 100,
     //         height: 100,
     //       });
-    fetch('http://localhost:5000/api/products')
+    // fetch('http://localhost:5000/api/products')
     // fetch('http://192.168.233.7:5000/api/products')
     // fetch(`${window.location.origin}/api/products`)
+    fetch('https://krml.onrender.com//api/products')
 
   .then(res => res.json())
   .then(products => {

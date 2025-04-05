@@ -19,7 +19,8 @@ app.get('/', (req, res) => {
 });
 
 // Connect SQLite database
-const db = new sqlite3.Database('./data/krml.db');
+// const db = new sqlite3.Database('./data/krml.db');
+const db = new sqlite3.Database(path.join(__dirname, 'data', 'krml.db'));
 
 
 // API to GET products
