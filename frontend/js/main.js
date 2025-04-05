@@ -34,13 +34,65 @@ document.addEventListener('DOMContentLoaded', () => {
     //         width: 100,
     //         height: 100,
     //       });
+
+
+// products listing on product webpage
+
+  // ______________________________________________________________________________________
     // fetch('http://localhost:5000/api/products')
     // fetch('http://192.168.233.7:5000/api/products')
     // fetch(`${window.location.origin}/api/products`)
-    fetch('https://krml.onrender.com/api/products')
+  // _______________________________________________________________________________________
+  //   fetch('https://krml.onrender.com/api/products')
 
+  // .then(res => res.json())
+  // .then(products => {
+  //   const container = document.getElementById('product-container');
+  //   container.innerHTML = "";
+
+  //   products.forEach(product => {
+  //     const card = document.createElement('div');
+  //     card.className = 'product-card fade-in';
+
+  //     const qrContainerId = `qrcode-${product.id}`;
+
+  //     card.innerHTML = `
+  //       <img src="${product.image}" alt="${product.name}" class="product-img">
+  //       <div class="product-info">
+  //         <h2>${product.name}</h2>
+  //         <p>${product.description}</p>
+  //         <p class="price">₹${product.price}</p>
+  //         <div id="${qrContainerId}" class="qrcode"></div>
+  //         <a href="assets/brochures/${product.name.toLowerCase().replace(/\s/g, '-')}.pdf" download class="download-btn">Download Brochure</a>
+  //       </div>
+  //     `;
+
+  //     container.appendChild(card);
+
+  //     // ✅ Generate the QR Code after the element is added to DOM
+  //     new QRCode(document.getElementById(qrContainerId), {
+  //       // text: `http://localhost:5000/api/products/${product.id}`,
+  //       text: `assets/brochures/${product.name.toLowerCase().replace(/\s/g, '-')}.pdf`,
+
+  //       // text: `http://localhost:5000/product-detail.html?id=${product.id}`,
+
+
+  //       width: 100,
+  //       height: 100,
+  //     });
+  //       });
+  //     })
+  //     .catch(err => {
+  //       console.error("Product loading failed:", err);
+  //       document.getElementById('product-container').innerHTML = "<p>Error loading products. Try again later.</p>";
+  //     });
+  // });
+  
+
+  fetch('https://krml.onrender.com/api/products')
   .then(res => res.json())
   .then(products => {
+    console.log("Fetched products:", products); // 👈 ADD THIS
     const container = document.getElementById('product-container');
     container.innerHTML = "";
 
@@ -63,25 +115,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
       container.appendChild(card);
 
-      // ✅ Generate the QR Code after the element is added to DOM
       new QRCode(document.getElementById(qrContainerId), {
-        // text: `http://localhost:5000/api/products/${product.id}`,
         text: `assets/brochures/${product.name.toLowerCase().replace(/\s/g, '-')}.pdf`,
-
-        // text: `http://localhost:5000/product-detail.html?id=${product.id}`,
-
-
         width: 100,
         height: 100,
       });
-        });
-      })
-      .catch(err => {
-        console.error("Product loading failed:", err);
-        document.getElementById('product-container').innerHTML = "<p>Error loading products. Try again later.</p>";
-      });
+    });
+  })
+  .catch(err => {
+    console.error("Product loading failed:", err);
+    document.getElementById('product-container').innerHTML = "<p>Error loading products. Try again later.</p>";
   });
-  
+});
 
 
 
@@ -191,4 +236,3 @@ new Swiper('.swiper-container', {
 });
 
 // nutritional value chartin product page
-
