@@ -22,17 +22,62 @@ app.get('/', (req, res) => {
 // const db = new sqlite3.Database('./data/krml.db');
 const db = new sqlite3.Database(path.join(__dirname, 'data', 'krml.db'));
 
+// __________________________________________________
 
 // API to GET products
-app.get('/api/products', (req, res) => {
-  db.all("SELECT * FROM products", [], (err, rows) => {
-    if (err) {
-      console.error(err.message);
-      return res.status(500).json({error: err.message});
-    }
+
+// app.get('/api/products', (req, res) => {
+//   db.all("SELECT * FROM products", [], (err, rows) => {
+//     if (err) {
+//       console.error(err.message);
+//       return res.status(500).json({error: err.message});
+//     }
+//     res.json(rows);
+//   });
+// });
+
+const dbPath = path.join(__dirname, 'data', 'krml.db');
+
+// 📦 GET all products
+app.get('/api/admin/products', (req, res) => {
+  const db = new sqlite3.Database(dbPath);
+  db.all("SELECT * FROM products ORDER BY id DESC", (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
     res.json(rows);
+    db.close();
   });
 });
+
+// ➕ POST add a new product
+app.post('/api/admin/products', (req, res) => {
+  const { name, description, price, image } = req.body;
+
+  if (!name || !description || !price || !image) {
+    return res.status(400).json({ status: "All fields required." });
+  }
+
+  const db = new sqlite3.Database(dbPath);
+  const stmt = db.prepare("INSERT INTO products (name, description, price, image) VALUES (?, ?, ?, ?)");
+  stmt.run(name, description, price, image, function(err) {
+    if (err) return res.status(500).json({ status: "Error saving product." });
+    res.json({ status: "Product added!" });
+    db.close();
+  });
+});
+
+// ❌ DELETE a product
+app.delete('/api/admin/products/:id', (req, res) => {
+  const id = req.params.id;
+  const db = new sqlite3.Database(dbPath);
+
+  db.run("DELETE FROM products WHERE id = ?", id, function(err) {
+    if (err) return res.status(500).json({ status: "Error deleting product." });
+    res.json({ status: "Product deleted!" });
+    db.close();
+  });
+});
+
+// __________________________________________
 
 // API to POST contact form submissions
 
