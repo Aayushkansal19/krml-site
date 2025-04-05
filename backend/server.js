@@ -39,17 +39,17 @@ const db = new sqlite3.Database(path.join(__dirname, 'data', 'krml.db'));
 // const dbPath = path.join(__dirname, 'data', 'krml.db');
 
 // 📦 GET all products
-// app.get('/api/admin/products', (req, res) => {
-//   // const db = new sqlite3.Database(dbPath);
-//   const db = new sqlite3.Database(path.join(__dirname, 'data', 'krml.db'));
-//   db.all("SELECT * FROM products ORDER BY id DESC", (err, rows) => {
-//     if (err) return res.status(500).json({ error: err.message });
-//     res.json(rows);
-//     db.close();
-//   });
-// });
+app.get('/api/admin/products', (req, res) => {
+  // const db = new sqlite3.Database(dbPath);
+  const db = new sqlite3.Database(path.join(__dirname, 'data', 'krml.db'));
+  db.all("SELECT * FROM products ORDER BY id DESC", (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+    db.close();
+  });
+});
 
-// 🌐 Public API to get products on main site
+
 // 🌐 Public API to fetch products for main site
 app.get('/api/products', (req, res) => {
   const db = new sqlite3.Database(path.join(__dirname, 'data', 'krml.db'));
