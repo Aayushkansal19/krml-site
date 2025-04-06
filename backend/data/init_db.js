@@ -108,3 +108,6 @@ db.serialize(() => {
 });
 
 db.close();
+
+
+// testing
