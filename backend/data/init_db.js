@@ -85,24 +85,54 @@ db.serialize(() => {
     }
   });
 
+  // ____________________________________________________________________________
+
   // ✅ Insert default products only if table is empty
-  db.get("SELECT COUNT(*) as count FROM products", (err, row) => {
+  // db.get("SELECT COUNT(*) as count FROM products", (err, row) => {
+  //   if (err) {
+  //     console.error("Error checking product count:", err.message);
+  //     return;
+  //   }
+
+  //   if (row.count === 0) {
+  //     console.log("📦 Inserting default products...");
+  //     db.run(`INSERT INTO products (name, description, price, image) VALUES
+  //       ('Chakki Atta', 'Stone-ground wheat flour for softness and nutrition.', 60, 'assets/images/atta.jpg'),
+  //       ('Maida', 'Refined wheat flour perfect for baking and snacks.', 55, 'assets/images/maida.jpg'),
+  //       ('Sooji', 'Coarse semolina, ideal for halwa, idli, and upma.', 40, 'assets/images/sooji.jpg')
+  //     `);
+  //   } else {
+  //     console.log("✅ Products already exist, skipping insert.");
+  //   }
+  // });
+
+
+  db.all("SELECT COUNT(*) as count FROM products", (err, rows) => {
     if (err) {
       console.error("Error checking product count:", err.message);
       return;
     }
-
-    if (row.count === 0) {
-      console.log("📦 Inserting default products...");
+  
+    const count = rows[0].count;
+  
+    if (count === 0) {
       db.run(`INSERT INTO products (name, description, price, image) VALUES
         ('Chakki Atta', 'Stone-ground wheat flour for softness and nutrition.', 60, 'assets/images/atta.jpg'),
         ('Maida', 'Refined wheat flour perfect for baking and snacks.', 55, 'assets/images/maida.jpg'),
         ('Sooji', 'Coarse semolina, ideal for halwa, idli, and upma.', 40, 'assets/images/sooji.jpg')
-      `);
+      `, (err) => {
+        if (err) {
+          console.error("Error inserting initial products:", err.message);
+        } else {
+          console.log("✅ Initial products added.");
+        }
+      });
     } else {
-      console.log("✅ Products already exist, skipping insert.");
+      console.log("ℹ️ Products already exist. Skipping insertion.");
     }
   });
+
+// ___________________________________________________________________________
 
   // Visitors table
   db.run(`CREATE TABLE IF NOT EXISTS visits (
