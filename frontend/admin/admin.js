@@ -201,18 +201,31 @@ if (window.location.pathname.includes("products.html")) {
     }
   
     // ❌ Delete product
-    window.deleteProduct = function (id) {
-      if (!confirm("Delete this product?")) return;
+    // window.deleteProduct = function (id) {
+    //   if (!confirm("Delete this product?")) return;
   
+    //   fetch(`https://krml.onrender.com/api/admin/products/${id}`, {
+    //     method: "DELETE"
+    //   })
+    //   .then(res => res.json())
+    //   .then(data => {
+    //     alert(data.status);
+    //     loadProducts();
+    //   });
+    // };
+
+    window.deleteProduct = function (id) {
       fetch(`https://krml.onrender.com/api/admin/products/${id}`, {
         method: "DELETE"
       })
       .then(res => res.json())
       .then(data => {
-        alert(data.status);
-        loadProducts();
+        console.log(data.status); // optional log
+        loadProducts(); // 🔁 Refresh product list
       });
     };
+    
+
   
     // 🚀 Load products on page load
     loadProducts();
