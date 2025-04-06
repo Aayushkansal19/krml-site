@@ -1,4 +1,4 @@
-.recent-visitors {
+/* .recent-visitors {
     margin-top: 30px;
     background-color: #ffffff;
     padding: 20px 30px;
@@ -50,6 +50,113 @@
       opacity: 0;
       transform: translateY(20px);
     }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .recent-visitors {
+    margin-top: 30px;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.06);
+  }
+  
+  .recent-visitors h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #2d572c;
+  }
+  
+  .visitor-entry {
+    background: #f6fff6;
+    border-left: 4px solid #4CAF50;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    transition: all 0.3s ease;
+  }
+  
+  .visitor-entry:hover {
+    background-color: #e8fbe8;
+    transform: translateX(3px);
+  }
+  
+  .visitor-entry small {
+    color: #666;
+    font-size: 12px;
+  }
+  
+   */
+
+   /* 🌿 General Container */
+.recent-visitors {
+    margin-top: 30px;
+    padding: 25px;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    animation: fadeIn 1.2s ease-in-out;
+  }
+  
+  /* 📌 Title Styling */
+  .recent-visitors h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #2d572c;
+    font-weight: 700;
+    border-bottom: 2px solid #d0e8d0;
+    padding-bottom: 10px;
+  }
+  
+  /* 🧾 Each Visitor Entry */
+  .visitor-entry {
+    background: linear-gradient(to right, #f0fff0, #fafffa);
+    border-left: 4px solid #4CAF50;
+    padding: 14px 18px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.1);
+    transition: all 0.3s ease;
+    opacity: 0;
+    animation: fadeInEntry 0.6s ease forwards;
+  }
+  
+  /* ✨ Animate on Hover */
+  .visitor-entry:hover {
+    background-color: #eafde9;
+    transform: translateX(5px);
+  }
+  
+  /* 🔤 Text Inside */
+  .visitor-entry strong {
+    font-weight: 700;
+    color: #2e7d32;
+    font-size: 16px;
+  }
+  
+  .visitor-entry small {
+    display: block;
+    font-size: 13px;
+    color: #555;
+    margin-top: 6px;
+  }
+  
+  /* 🌟 Animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeInEntry {
     to {
       opacity: 1;
       transform: translateY(0);
