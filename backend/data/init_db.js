@@ -55,69 +55,56 @@
 
 
 
+const fs = require('fs');
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./krml.db');
 
-function initDatabase() {
-  db.serialize(() => {
-    // Create tables
-    db.run(`CREATE TABLE IF NOT EXISTS products (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT,
-      description TEXT,
-      price REAL,
-      image TEXT
-    )`);
+const INIT_FLAG = './.db_initialized';
 
-    db.run(`CREATE TABLE IF NOT EXISTS contacts (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT,
-      email TEXT,
-      message TEXT,
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      timestamp TEXT
-    )`);
+db.serialize(() => {
+  // Tables
+  db.run(`CREATE TABLE IF NOT EXISTS products (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    description TEXT,
+    price REAL,
+    image TEXT
+  )`);
 
-    db.run(`CREATE TABLE IF NOT EXISTS visits (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      page TEXT,
-      timestamp TEXT,
-      ip TEXT,
-      location TEXT
-    )`);
+  db.run(`CREATE TABLE IF NOT EXISTS contacts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    email TEXT,
+    message TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    timestamp TEXT
+  )`);
 
-    // ✅ Now ensure duplicate products are not inserted
-    db.get("SELECT COUNT(*) as count FROM products", (err, row) => {
+  db.run(`CREATE TABLE IF NOT EXISTS visits (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    page TEXT,
+    timestamp TEXT,
+    ip TEXT,
+    location TEXT
+  )`);
+
+  // ✅ Use flag file to prevent reinserting
+  if (!fs.existsSync(INIT_FLAG)) {
+    db.run(`INSERT INTO products (name, description, price, image) VALUES
+      ('Chakki Atta', 'Stone-ground wheat flour for softness and nutrition.', 60, 'assets/images/atta.jpg'),
+      ('Maida', 'Refined wheat flour perfect for baking and snacks.', 55, 'assets/images/maida.jpg'),
+      ('Sooji', 'Coarse semolina, ideal for halwa, idli, and upma.', 40, 'assets/images/sooji.jpg')
+    `, (err) => {
       if (err) {
-        console.error("Error counting products:", err.message);
-        db.close();
-        return;
-      }
-
-      if (row.count === 0) {
-        console.log("No products found. Inserting default products...");
-
-        const stmt = db.prepare(`INSERT INTO products (name, description, price, image) VALUES (?, ?, ?, ?)`);
-
-        stmt.run('Chakki Atta', 'Stone-ground wheat flour for softness and nutrition.', 60, 'assets/images/atta.jpg');
-        stmt.run('Maida', 'Refined wheat flour perfect for baking and snacks.', 55, 'assets/images/maida.jpg');
-        stmt.run('Sooji', 'Coarse semolina, ideal for halwa, idli, and upma.', 40, 'assets/images/sooji.jpg');
-
-        stmt.finalize(err => {
-          if (err) {
-            console.error("Error finalizing insert:", err.message);
-          } else {
-            console.log("✅ Default products inserted.");
-          }
-
-          db.close();
-        });
+        console.error("Error inserting products:", err.message);
       } else {
-        console.log(`ℹ️ ${row.count} products already exist. Skipping insert.`);
-        db.close(); // ✅ Only close once this branch finishes
+        console.log("✅ Default products inserted.");
+        fs.writeFileSync(INIT_FLAG, "Database initialized");
       }
     });
-  });
-}
+  } else {
+    console.log("⚠️ Products already inserted. Skipping default inserts.");
+  }
+});
 
-initDatabase();
+db.close();
