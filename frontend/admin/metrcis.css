@@ -1,0 +1,58 @@
+.recent-visitors {
+    margin-top: 30px;
+    background-color: #ffffff;
+    padding: 20px 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    animation: fadeIn 1.2s ease;
+  }
+  
+  .recent-visitors h2 {
+    font-size: 24px;
+    color: #2d572c;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .recent-visitors h2::before {
+    content: "🌐";
+  }
+  
+  .visitor-entry {
+    margin-top: 12px;
+    padding: 12px 15px;
+    background-color: #f5fdf5;
+    border-left: 4px solid #57a957;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+  
+  .visitor-entry:hover {
+    background-color: #ebfceb;
+    transform: translateX(5px);
+  }
+  
+  .visitor-entry strong {
+    font-weight: 600;
+    color: #2d572c;
+  }
+  
+  .visitor-entry small {
+    display: block;
+    font-size: 13px;
+    color: #444;
+    margin-top: 5px;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

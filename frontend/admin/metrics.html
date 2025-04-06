@@ -5,13 +5,14 @@
   <title>KRML Admin - Site Metrics</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="chart-style.css">
+  <link rel="stylesheet" href="metrics.css">
 
   <!-- ✅ Recharts CDN -->
   <script src="https://cdn.jsdelivr.net/npm/react@18/umd/react.development.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.development.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/recharts/umd/Recharts.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/recharts/umd/Recharts.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     .charts-container {
       max-width: 700px;
@@ -20,13 +21,24 @@
     canvas {
       margin-bottom: 30px;
     }
+    .metric-summary p {
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin: 8px 0;
+    }
   </style>
 </head>
 <body>
   <div class="admin-container fade-in">
     <h1>📊 KRML Site Metrics</h1>
-    <div id="metrics-summary" class="metric-summary"></div>
+    
+    <!-- ✅ Summary Info -->
+    <div id="metrics-summary" class="metric-summary">
+      <p><strong>Total Visits:</strong> <span id="totalVisits">Loading...</span></p>
+      <p><strong>Total Messages:</strong> <span id="totalMessages">Loading...</span></p>
+    </div>
 
+    <!-- ✅ Chart containers -->
     <div class="charts-container">
       <canvas id="barChart" height="200"></canvas>
       <canvas id="pieChart" height="200"></canvas>
@@ -34,8 +46,9 @@
 
     <a href="index.html" class="back-btn">← Back to Dashboard</a>
   </div>
-  <div id="recent-visits" class="metric-summary" style="margin-top: 30px;"></div>
 
+  <!-- ✅ Recent visitors -->
+  <div id="recent-visits" class="metric-summary" style="margin-top: 30px;"></div>
 
   <script src="admin.js"></script>
 </body>
