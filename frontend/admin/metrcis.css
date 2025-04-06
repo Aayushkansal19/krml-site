@@ -1,50 +1,54 @@
-/* .recent-visitors {
-    margin-top: 30px;
-    background-color: #ffffff;
-    padding: 20px 30px;
-    border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-    animation: fadeIn 1.2s ease;
+/* 🧠 Styling for Recent Visitors Entries */
+#recent-visits {
+    padding: 20px;
+    background: #ffffff;
+    margin-top: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+    animation: fadeIn 1.2s ease-in-out;
   }
   
-  .recent-visitors h2 {
-    font-size: 24px;
-    color: #2d572c;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  /* 👤 Visitor Entry Box */
+  #recent-visits .visitor-entry {
+    border-left: 4px solid #4CAF50;
+    background: #f9fff9;
+    padding: 15px 18px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 2px 8px rgba(0, 128, 0, 0.05);
   }
   
-  .recent-visitors h2::before {
-    content: "🌐";
+  #recent-visits .visitor-entry:hover {
+    background-color: #f0fdf4;
+    transform: translateX(6px);
   }
   
-  .visitor-entry {
-    margin-top: 12px;
-    padding: 12px 15px;
-    background-color: #f5fdf5;
-    border-left: 4px solid #57a957;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-  }
-  
-  .visitor-entry:hover {
-    background-color: #ebfceb;
-    transform: translateX(5px);
-  }
-  
-  .visitor-entry strong {
+  /* ✍️ Text Elements */
+  #recent-visits .visitor-entry strong {
+    font-size: 16px;
     font-weight: 600;
-    color: #2d572c;
+    color: #2e7d32;
   }
   
-  .visitor-entry small {
+  #recent-visits .visitor-entry small {
     display: block;
+    margin-top: 6px;
     font-size: 13px;
-    color: #444;
-    margin-top: 5px;
+    color: #666;
   }
   
+  /* ✨ Heading */
+  #recent-visits h3 {
+    color: #2e7d32;
+    font-weight: 700;
+    font-size: 24px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #b2dfdb;
+    padding-bottom: 10px;
+  }
+  
+  /* 🌟 Fade In Animation */
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -55,111 +59,6 @@
       transform: translateY(0);
     }
   }
+  
 
-  .recent-visitors {
-    margin-top: 30px;
-    padding: 20px;
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.06);
-  }
-  
-  .recent-visitors h3 {
-    font-size: 20px;
-    margin-bottom: 15px;
-    color: #2d572c;
-  }
-  
-  .visitor-entry {
-    background: #f6fff6;
-    border-left: 4px solid #4CAF50;
-    padding: 12px;
-    border-radius: 8px;
-    margin-bottom: 12px;
-    transition: all 0.3s ease;
-  }
-  
-  .visitor-entry:hover {
-    background-color: #e8fbe8;
-    transform: translateX(3px);
-  }
-  
-  .visitor-entry small {
-    color: #666;
-    font-size: 12px;
-  }
-  
-   */
-
-   /* 🌿 General Container */
-.recent-visitors {
-    margin-top: 30px;
-    padding: 25px;
-    background: #ffffff;
-    border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-    animation: fadeIn 1.2s ease-in-out;
-  }
-  
-  /* 📌 Title Styling */
-  .recent-visitors h3 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #2d572c;
-    font-weight: 700;
-    border-bottom: 2px solid #d0e8d0;
-    padding-bottom: 10px;
-  }
-  
-  /* 🧾 Each Visitor Entry */
-  .visitor-entry {
-    background: linear-gradient(to right, #f0fff0, #fafffa);
-    border-left: 4px solid #4CAF50;
-    padding: 14px 18px;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.1);
-    transition: all 0.3s ease;
-    opacity: 0;
-    animation: fadeInEntry 0.6s ease forwards;
-  }
-  
-  /* ✨ Animate on Hover */
-  .visitor-entry:hover {
-    background-color: #eafde9;
-    transform: translateX(5px);
-  }
-  
-  /* 🔤 Text Inside */
-  .visitor-entry strong {
-    font-weight: 700;
-    color: #2e7d32;
-    font-size: 16px;
-  }
-  
-  .visitor-entry small {
-    display: block;
-    font-size: 13px;
-    color: #555;
-    margin-top: 6px;
-  }
-  
-  /* 🌟 Animations */
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  @keyframes fadeInEntry {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
+   
