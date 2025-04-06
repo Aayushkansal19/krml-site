@@ -219,106 +219,195 @@ if (window.location.pathname.includes("products.html")) {
   }
 //   API for metrics on admin page
 
-if (window.location.pathname.includes("metrics.html")) {
-    let barChart, pieChart;
+// if (window.location.pathname.includes("metrics.html")) {
+//     let barChart, pieChart;
   
-    const BASE_URL = window.location.origin;
+//     const BASE_URL = window.location.origin;
   
-    function fetchMetrics() {
-      Promise.all([
-        fetch(`${BASE_URL}/api/admin/visits`).then(res => res.json()),
-        fetch(`${BASE_URL}/api/admin/messages-count`).then(res => res.json())
-      ]).then(([visits, messageData]) => {
-        const visitTable = visits
+//     function fetchMetrics() {
+//       Promise.all([
+//         fetch(`${BASE_URL}/api/admin/visits`).then(res => res.json()),
+//         fetch(`${BASE_URL}/api/admin/messages-count`).then(res => res.json())
+//       ]).then(([visits, messageData]) => {
+//         const visitTable = visits
+//         .slice(0, 5)
+//         .map(v => `
+//           <div style="margin-bottom: 8px;">
+//             <strong>${v.page}</strong> — ${v.location || "Unknown Location"} <br/>
+//             <small>🕒 ${new Date(v.timestamp).toLocaleString()}</small>
+//           </div>
+//         `)
+//         .join('');
+//         console.log("Visits data:", visits);
+//         console.log("Messages count:", messageData);
+
+//       document.getElementById("recent-visits").innerHTML = `
+//         <h3 style="margin-bottom: 10px;">🌐 Recent Visitors</h3>
+//         ${visitTable}
+//       `;
+    
+
+//         const labels = Object.keys(pageCounts);
+//         const values = Object.values(pageCounts);
+  
+//         // Destroy old charts if they exist
+//         if (barChart) barChart.destroy();
+//         if (pieChart) pieChart.destroy();
+  
+//         const ctxBar = document.getElementById("barChart").getContext("2d");
+//         barChart = new Chart(ctxBar, {
+//           type: 'bar',
+//           data: {
+//             labels,
+//             datasets: [{
+//               label: "Visits Per Page",
+//               data: values,
+//               backgroundColor: '#4caf50',
+//               borderRadius: 6
+//             }]
+//           },
+//           options: {
+//             responsive: true,
+//             plugins: {
+//               legend: { display: false },
+//               tooltip: { enabled: true }
+//             }
+//           }
+//         });
+  
+//         const ctxPie = document.getElementById("pieChart").getContext("2d");
+//         pieChart = new Chart(ctxPie, {
+//           type: 'pie',
+//           data: {
+//             labels,
+//             datasets: [{
+//               data: values,
+//               backgroundColor: ['#4CAF50', '#FF9800', '#2196F3', '#9C27B0']
+//             }]
+//           },
+//           options: {
+//             responsive: true,
+//             plugins: {
+//               legend: { position: 'bottom' }
+//             }
+//           }
+//         });
+//       });
+//     }
+  
+
+
+//     // 🗂️ Show recent 5 visits with page + location + time
+// const visitTable = visits
+// .slice(0, 5)
+// .map(v => `
+//   <div style="margin-bottom: 8px;">
+//     <strong>${v.page}</strong> — ${v.location} <br/>
+//     <small>🕒 ${new Date(v.timestamp).toLocaleString()}</small>
+//   </div>
+// `)
+// .join('');
+
+// document.getElementById("recent-visits").innerHTML = `
+// <h3 style="margin-bottom: 10px;">🌐 Recent Visitors</h3>
+// ${visitTable}
+// `;
+
+    
+    
+//     fetchMetrics();
+//     setInterval(fetchMetrics, 15000); // Refresh every 15 seconds
+//   }
+
+
+  
+  if (window.location.pathname.includes("metrics.html")) {
+  let barChart, pieChart;
+
+  const BASE_URL = window.location.origin;
+
+  function fetchMetrics() {
+    Promise.all([
+      fetch(`${BASE_URL}/api/admin/visits`).then(res => res.json()),
+      fetch(`${BASE_URL}/api/admin/messages-count`).then(res => res.json())
+    ]).then(([visits, messageData]) => {
+      // ✅ Count visits per page
+      const pageCounts = {};
+      visits.forEach(v => {
+        pageCounts[v.page] = (pageCounts[v.page] || 0) + 1;
+      });
+
+      // ✅ Show recent 5 visits
+      const visitTable = visits
         .slice(0, 5)
         .map(v => `
           <div style="margin-bottom: 8px;">
-            <strong>${v.page}</strong> — ${v.location || "Unknown Location"} <br/>
+            <strong>${v.page}</strong> — ${v.location || "Unknown"} <br/>
             <small>🕒 ${new Date(v.timestamp).toLocaleString()}</small>
           </div>
-        `)
-        .join('');
-        console.log("Visits data:", visits);
-        console.log("Messages count:", messageData);
+        `).join('');
 
       document.getElementById("recent-visits").innerHTML = `
         <h3 style="margin-bottom: 10px;">🌐 Recent Visitors</h3>
         ${visitTable}
       `;
-    
 
-        const labels = Object.keys(pageCounts);
-        const values = Object.values(pageCounts);
-  
-        // Destroy old charts if they exist
-        if (barChart) barChart.destroy();
-        if (pieChart) pieChart.destroy();
-  
-        const ctxBar = document.getElementById("barChart").getContext("2d");
-        barChart = new Chart(ctxBar, {
-          type: 'bar',
-          data: {
-            labels,
-            datasets: [{
-              label: "Visits Per Page",
-              data: values,
-              backgroundColor: '#4caf50',
-              borderRadius: 6
-            }]
-          },
-          options: {
-            responsive: true,
-            plugins: {
-              legend: { display: false },
-              tooltip: { enabled: true }
-            }
+      document.getElementById("metrics-summary").innerHTML = `
+        <p><strong>Total Visits:</strong> ${visits.length}</p>
+        <p><strong>Total Messages:</strong> ${messageData.count}</p>
+      `;
+
+      // ✅ Prepare chart data
+      const labels = Object.keys(pageCounts);
+      const values = Object.values(pageCounts);
+
+      // Destroy old charts if they exist
+      if (barChart) barChart.destroy();
+      if (pieChart) pieChart.destroy();
+
+      const ctxBar = document.getElementById("barChart").getContext("2d");
+      barChart = new Chart(ctxBar, {
+        type: 'bar',
+        data: {
+          labels,
+          datasets: [{
+            label: "Visits Per Page",
+            data: values,
+            backgroundColor: '#4caf50',
+            borderRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: false },
+            tooltip: { enabled: true }
           }
-        });
-  
-        const ctxPie = document.getElementById("pieChart").getContext("2d");
-        pieChart = new Chart(ctxPie, {
-          type: 'pie',
-          data: {
-            labels,
-            datasets: [{
-              data: values,
-              backgroundColor: ['#4CAF50', '#FF9800', '#2196F3', '#9C27B0']
-            }]
-          },
-          options: {
-            responsive: true,
-            plugins: {
-              legend: { position: 'bottom' }
-            }
-          }
-        });
+        }
       });
-    }
-  
 
-
-    // 🗂️ Show recent 5 visits with page + location + time
-const visitTable = visits
-.slice(0, 5)
-.map(v => `
-  <div style="margin-bottom: 8px;">
-    <strong>${v.page}</strong> — ${v.location} <br/>
-    <small>🕒 ${new Date(v.timestamp).toLocaleString()}</small>
-  </div>
-`)
-.join('');
-
-document.getElementById("recent-visits").innerHTML = `
-<h3 style="margin-bottom: 10px;">🌐 Recent Visitors</h3>
-${visitTable}
-`;
-
-    
-    
-    fetchMetrics();
-    setInterval(fetchMetrics, 15000); // Refresh every 15 seconds
+      const ctxPie = document.getElementById("pieChart").getContext("2d");
+      pieChart = new Chart(ctxPie, {
+        type: 'pie',
+        data: {
+          labels,
+          datasets: [{
+            data: values,
+            backgroundColor: ['#4CAF50', '#FF9800', '#2196F3', '#9C27B0']
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { position: 'bottom' }
+          }
+        }
+      });
+    }).catch(err => {
+      console.error("Metrics fetch error:", err);
+    });
   }
 
-
-  
-  
+  fetchMetrics();
+  setInterval(fetchMetrics, 15000); // 🔁 Refresh every 15 seconds
+}
