@@ -52,14 +52,30 @@
 
 // _________________________________
 
-
-
-
+// _________________________
+// testing line
 const fs = require('fs');
-const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('./krml.db');
+const INIT_FLAG = './backend/data/.db_initialized';
 
-const INIT_FLAG = './.db_initialized';
+// 🧠 Don't initialize again if already done
+if (fs.existsSync(INIT_FLAG)) {
+  console.log("✅ Database already initialized. Skipping.");
+  process.exit(0);
+}
+// _________________________________________
+
+// may uncomment
+// const fs = require('fs');
+
+const sqlite3 = require('sqlite3').verbose();
+
+// const db = new sqlite3.Database('./krml.db');
+const db = new sqlite3.Database(__dirname + '/krml.db');
+
+// const db = new sqlite3.Database('.backend/data/krml.db');
+
+// may uncomment
+// const INIT_FLAG = './.db_initialized';
 
 db.serialize(() => {
   // Tables
@@ -106,8 +122,9 @@ db.serialize(() => {
     console.log("⚠️ Products already inserted. Skipping default inserts.");
   }
 });
+// ________________________________________
+// testing line
+fs.writeFileSync(INIT_FLAG, 'initialized');
+// ____________
 
 db.close();
-
-
-// testing
